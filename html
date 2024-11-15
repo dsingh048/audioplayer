@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Audio Player</title>
+    <style>
+        /* Basic styles for the page and audio player */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .audio-container {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .audio-info {
+            font-size: 14px;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="audio-container">
+        <h2>Custom Audio Player</h2>
+        <input type="text" id="audioURL" placeholder="Paste audio URL here" oninput="updatePlayer()">
+        <br>
+        <audio id="audioPlayer" class="audio-player" controls>
+            <source id="audioSource" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <div class="controls">
+            <button onclick="playAudio()">Play</button>
+            <button onclick="pauseAudio()">Pause</button>
+            <button onclick="rewindAudio()">Rewind 10s</button>
+            <button onclick="forwardAudio()">Forward 10s</button>
+        </div>
+        <div class="audio-info" id="audioInfo">No audio loaded</div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+        const audioInfo = document.getElementById('audioInfo');
+        const audioURLInput = document.getElementById('audioURL');
+
+        // Function to update the audio player with the URL entered by the user
+        function updatePlayer() {
+            const audioURL = audioURLInput.value.trim();
+            if (audioURL) {
+                audioSource.src = audioURL;
+                audio.load();  // Load the new audio file
+                audioInfo.innerText = `Audio loaded: ${audioURL}`;
+            } else {
+                audioInfo.innerText = 'No audio loaded';
+            }
+        }
+
+        // Play the audio
+        function playAudio() {
+            if (audio.src) {
+                audio.play();
+            } else {
+                alert('Please paste a valid audio URL!');
+            }
+        }
+
+        // Pause the audio
+        function pauseAudio() {
+            audio.pause();
+        }
+
+        // Rewind the audio by 10 seconds
+        function rewindAudio() {
+            audio.currentTime -= 10;
+        }
+
+        // Forward the audio by 10 seconds
+        function forwardAudio() {
+            audio.currentTime += 10;
+        }
+    </script>
+
+</body>
+</html>
